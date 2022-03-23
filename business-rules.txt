@@ -1,0 +1,3 @@
+ [ ] Uma Task pode ser criada sem um User.
+ [ ] Toda Task é iniciada com a Category todo
+ [ ] 
