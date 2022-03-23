@@ -3,3 +3,5 @@
 ## Routes
  1. [C] Create Task
  2. [R] List Tasks
+ 3. [U] Update Task
+ 4. [D] Delete Task
