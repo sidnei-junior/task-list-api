@@ -3,6 +3,7 @@ package com.tasklist.tasklistapi.models;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,6 +27,13 @@ public class Task implements Serializable{
 
 	private long assigned;
 	
+	private String priority = "medium";
+	
+	private Date deadline;
+	
+	@Column
+	private boolean isSolved = false;
+
 	@Temporal(TemporalType.TIMESTAMP)     
 	private Date created_at = new Date(System.currentTimeMillis());
 	
@@ -55,6 +63,30 @@ public class Task implements Serializable{
 
 	public void setAssigned(long assigned) {
 		this.assigned = assigned;
+	}
+	
+	public String getPriority() {
+		return priority;
+	}
+
+	public void setPriority(String priority) {
+		this.priority = priority;
+	}
+
+	public Date getDeadline() {
+		return deadline;
+	}
+
+	public void setDeadline(Date deadline) {
+		this.deadline = deadline;
+	}
+
+	public boolean isSolved() {
+		return isSolved;
+	}
+
+	public void setSolved(boolean isSolved) {
+		this.isSolved = isSolved;
 	}
 
 	public Date getCreated_at() {
