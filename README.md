@@ -7,4 +7,4 @@
  4. [D] Delete Task
 
 ## Documentation
-Swagger tool usad for documentation API routes
+Swagger tool used to document API routes
