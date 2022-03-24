@@ -27,21 +27,21 @@ public class TaskResource {
 	@Autowired
 	TaskRepository taskRepository;
 	
+	@PostMapping("/task")
+	@ApiOperation(value="Create a task")
+	public Task createTask(@RequestBody Task task) {
+		return taskRepository.save(task);
+	}
+	
 	@GetMapping("/task")
 	@ApiOperation(value="Return tasks list")
 	public List<Task> listTasks() {
 		return taskRepository.findAll();
 	}
 	
-	@GetMapping("/task/{id}")
-	@ApiOperation(value="Return a unique task")
-	public Task getTask(@PathVariable(value="id") long id) {
-		return taskRepository.findById(id);
-	}
-	
-	@PostMapping("/task")
-	@ApiOperation(value="Create a task")
-	public Task createTask(@RequestBody Task task) {
+	@PutMapping("/task")
+	@ApiOperation(value="Update a task")
+	public Task updateTask(@RequestBody Task task) {
 		return taskRepository.save(task);
 	}
 	
@@ -51,9 +51,9 @@ public class TaskResource {
 		taskRepository.deleteById(id);
 	}
 	
-	@PutMapping("/task")
-	@ApiOperation(value="Update a task")
-	public Task updateTask(@RequestBody Task task) {
-		return taskRepository.save(task);
+	@GetMapping("/task/{id}")
+	@ApiOperation(value="Return a unique task")
+	public Task getTask(@PathVariable(value="id") long id) {
+		return taskRepository.findById(id);
 	}
 }
