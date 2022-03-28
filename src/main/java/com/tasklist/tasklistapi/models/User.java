@@ -11,6 +11,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 @Table(name="USER_TB")
 public class User implements Serializable{
@@ -22,6 +24,7 @@ public class User implements Serializable{
 	
 	private String username;
 	
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
 	
 	@Temporal(TemporalType.TIMESTAMP)     
