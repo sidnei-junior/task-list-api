@@ -92,4 +92,16 @@ public class Task implements Serializable{
 	public Date getCreated_at() {
 		return created_at;
 	}
+	
+	public boolean notFoundAllCreateResources() {
+		boolean notFindTitle = (this.title == "" || this.title == null);
+		boolean notFindDescription = (this.description == "" || this.description == null);
+		boolean notFindDeadline = (this.deadline == null);
+		return notFindTitle || notFindDescription || notFindDeadline;
+	}
+	
+	public boolean notFoundAllUpdateResources() {
+		boolean notFindPriority = (this.priority == "" || this.priority == null);
+		return notFindPriority || notFoundAllCreateResources();
+	}
 }

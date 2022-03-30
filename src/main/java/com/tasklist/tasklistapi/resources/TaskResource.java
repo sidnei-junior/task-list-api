@@ -3,6 +3,8 @@ package com.tasklist.tasklistapi.resources;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,9 +31,13 @@ public class TaskResource {
 	
 	@PostMapping("/task")
 	@ApiOperation(value="Create a task")
-	public Task createTask(@RequestBody Task task) {
-		return taskRepository.save(task);
+	public ResponseEntity<Task> createTask(@RequestBody Task task) {
+		if (task.notFoundAllCreateResources()) {
+			return new ResponseEntity<Task>(HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<Task>(taskRepository.save(task), HttpStatus.OK);
 	}
+	
 	
 	@GetMapping("/task")
 	@ApiOperation(value="Return tasks list")
@@ -41,19 +47,37 @@ public class TaskResource {
 	
 	@PutMapping("/task")
 	@ApiOperation(value="Update a task")
-	public Task updateTask(@RequestBody Task task) {
-		return taskRepository.save(task);
+	public ResponseEntity<Task> updateTask(@RequestBody Task task) {
+		Task taskToUpdate = taskRepository.findById(task.getId());
+		if (taskToUpdate == null) {
+			return new ResponseEntity<Task>(HttpStatus.NOT_FOUND);
+		}
+		
+		if (task.notFoundAllUpdateResources()) {
+			return new ResponseEntity<Task>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return new ResponseEntity<Task>(taskRepository.save(task), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/task/{id}")
 	@ApiOperation(value="Delete a task")
-	public void deleteTask(@PathVariable(value="id") long id) {
+	public ResponseEntity<Void> deleteTask(@PathVariable(value="id") long id) {
+		Task taskToDelete = taskRepository.findById(id);
+		if (taskToDelete == null) {
+			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+		}
 		taskRepository.deleteById(id);
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
 	@GetMapping("/task/{id}")
 	@ApiOperation(value="Return a unique task")
-	public Task getTask(@PathVariable(value="id") long id) {
-		return taskRepository.findById(id);
+	public ResponseEntity<Task> getTask(@PathVariable(value="id") long id) {
+		Task task = taskRepository.findById(id);
+		if (task == null) {
+			return new ResponseEntity<Task>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<Task>(task, HttpStatus.OK);
 	}
 }
